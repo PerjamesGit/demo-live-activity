@@ -2,10 +2,11 @@
 //  ViewController.swift
 //  demo_live_activity
 //
-//  Created by james ong on 23/08/2023.
+//  Created by james ong on 23/08/202 3.
 //
 
 import OneSignalFramework
+import OneSignalExtension
 import UIKit
 import SwiftUI
 import ActivityKit
@@ -13,70 +14,48 @@ import WidgetKit
 
 @available(iOS 16.2, *)
 class ViewController: UIViewController {
-    var activity: Activity<SunwayWidgetAttributes>? = nil
-    let attributes = SunwayWidgetAttributes(name: "Testing")
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+    let endDate = Date(timeIntervalSince1970: 1693360200);
+    var bookingNumber = 100;
     
     @IBAction func startActivities(_ sender: Any) {
-        let endDate = Date().addingTimeInterval(60 * 1);
+        var attributes = SunwayWidgetAttributes(startDate: .now, endDate: endDate, title: "booking\(bookingNumber)");
         let state = SunwayWidgetAttributes.ContentState(title: "See you again for more unforgettable moments", dynamicTitle: "Come back soon to your cherished retreat")
-        activity = try? Activity<SunwayWidgetAttributes>.request(attributes: attributes, content: ActivityContent(state: state, staleDate: nil), pushType: .token)
+        let activity = try? Activity<SunwayWidgetAttributes>.request(attributes: attributes, content: ActivityContent(state: state, staleDate: endDate), pushType: .token)
         
         Task {
+            //Listener to store the activity in one signal
             if let pushTokenUpdates = activity?.pushTokenUpdates {
                 for await pushToken in pushTokenUpdates {
-                    let pushTokenString = pushToken.reduce("") {
-                     $0 + String(format: "%02x", $1)
-                    }
+                    let myToken = pushToken.map {String(format: "%02x", $0)}.joined()
                     
-                    OneSignalLiveActivityController.enter("booking98", withToken: pushTokenString)
-                    print("Push Token String \(pushTokenString)")
+                    OneSignalLiveActivityController.enter("booking\(bookingNumber)", withToken: myToken)
+                    print("Push Token String \(myToken)")
                 }
             }
         }
+        bookingNumber += 1;
         
-//        Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
-//            print(self.time)
-//            if (self.time >= 30) {
-//                let state = SunwayWidgetAttributes.ContentValue(time: self.time)
 //                Task {
-//                    await self.activity?.end(ActivityContent(state: state, staleDate: nil), dismissalPolicy: .immediate)
-//                    self.time = 0
-//                    timer.invalidate();
+//                    if let contentUpdates = activity?.contentUpdates {
+//                        for await content in contentUpdates {
+//                            print("LA content update: \(content)")
+//                            print("LA activity id: \(activity?.id), content update: \(content.state)")
+//                        }
+//                    }
+//        
 //                }
-//            } else {
-//                self.time += 1;
-//                let state = SunwayWidgetAttributes.ContentValue(time: self.time)
-//                Task {
-//                    await self.activity?.update((ActivityContent(state: state, staleDate: nil)))
-//                }
-//            }
-//        });
-    }
-    
-    @IBAction func updateActivity(_ sender: Any) {
-        print("end")
-        let state = SunwayWidgetAttributes.ContentState(title: "", dynamicTitle: "")
-
+//        
+        //Listener to close the live activity
         Task {
-            await activity?.end(ActivityContent(state: state, staleDate: nil), dismissalPolicy: .immediate)
+            if let activityStateUpdates = activity?.activityStateUpdates {
+                for await content in activityStateUpdates {
+                    print("LA state update: \(content)")
+                    if (content == .stale || content == .ended) {
+                        let state = SunwayWidgetAttributes.ContentState(title: "", dynamicTitle: "")
+                        await activity?.end(ActivityContent(state:state, staleDate: endDate), dismissalPolicy:.immediate)
+                    }
+                }
+            }
         }
     }
-    
-    
-    @IBAction func endActivity(_ sender: Any) {
-        print("end")
-        let state = SunwayWidgetAttributes.ContentState(title: "", dynamicTitle: "")
-
-        Task {
-            await activity?.end(ActivityContent(state: state, staleDate: nil), dismissalPolicy: .immediate)
-        }
-    }
-    
-    
 }

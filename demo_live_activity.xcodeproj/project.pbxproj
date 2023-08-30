@@ -88,6 +88,7 @@
 		4E5EC3F0ACAFF065566E792F /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5915D71167F9C53E49D58C2D /* Pods_demo_live_activity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_demo_live_activity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		628B33FFAA13B278C8D7E64D /* Pods-demo_live_activity-demo_live_activityUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demo_live_activity-demo_live_activityUITests.release.xcconfig"; path = "Target Support Files/Pods-demo_live_activity-demo_live_activityUITests/Pods-demo_live_activity-demo_live_activityUITests.release.xcconfig"; sourceTree = "<group>"; };
+		7534A5042A9ED3E000F98172 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		757297852A9C3220003EF92A /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		757297872A9C3220003EF92A /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		757297892A9C3220003EF92A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -235,6 +236,7 @@
 				759E95DB2A95EEC300A553EC /* Assets.xcassets */,
 				759E95DD2A95EEC300A553EC /* LaunchScreen.storyboard */,
 				759E95E02A95EEC300A553EC /* Info.plist */,
+				7534A5042A9ED3E000F98172 /* README.md */,
 			);
 			path = demo_live_activity;
 			sourceTree = "<group>";
