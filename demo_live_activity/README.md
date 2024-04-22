@@ -9,7 +9,7 @@
    - [Create Activity Attributes](#create-activity-attributes)
    - [Create Live Activity Widget](#create-live-activity-widget)
    - [Show Live Activtiy Widget](#show-live-activity-widget)
-   - [End Live Activity Widget](#end-live-activity-widget)
+   - [End Live Activity Widget](#show-live-activity-widget)
 
  - [Backend](#backend)
     - [Requirement](#requirement-backend)

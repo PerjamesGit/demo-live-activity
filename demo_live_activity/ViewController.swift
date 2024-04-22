@@ -42,9 +42,9 @@ class ViewController: UIViewController {
 //                            print("LA activity id: \(activity?.id), content update: \(content.state)")
 //                        }
 //                    }
-//        
+//
 //                }
-//        
+//
         //Listener to close the live activity
         Task {
             if let activityStateUpdates = activity?.activityStateUpdates {
